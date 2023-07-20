@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "304491516562",
+    "project_id": "optiwiseai-c45b9",
+    "storage_bucket": "optiwiseai-c45b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304491516562:android:9fd06b18f0f1081667cc4b",
+        "android_client_info": {
+          "package_name": "com.optiwiseai.optiwiseai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304491516562-8gbt9feovrr5986v35tbosnf2h9oo6nb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmo2xbC6Jdumzj7QMJE6-zYRNLpm01gpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304491516562-8gbt9feovrr5986v35tbosnf2h9oo6nb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "304491516562-68dn39jqhbac8hmqgcuceiaau5ue6h67.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.optiwiseai.optiwiseai"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
