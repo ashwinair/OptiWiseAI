@@ -1,7 +1,7 @@
 import 'package:optiwiseai/ProductDetails/product.dart';
 
 class AIConstants {
-  static String apiKEY = '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'; //optiwiseAI API KEY
+  static String apiKEY = 'APIKEY'; //optiwiseAI API KEY
   static String? barcode;
 //Generic Name: ${Product.productInfo[barcode]?.genericName}
 // size: ${Product.productInfo[barcode]?.size}
