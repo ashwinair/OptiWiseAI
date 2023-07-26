@@ -5,20 +5,17 @@ import 'package:flutter/foundation.dart';
 import 'package:optiwiseai/ProductDetails/product_analysis.dart';
 import 'package:optiwiseai/constant/openAI_constants.dart';
 
-import '../OpenFoodFactsAPI/fetch_api.dart';
-import '../ProductDetails/product.dart';
-
 class OpenAIAPI {
   static var aiResult;
 
   static Future<bool> generateJSONAnsWithAI() async {
     try {
       if (kDebugMode) {
-              print('LLm: analyzing.....');
-            }
+        print('LLm: analyzing.....');
+      }
       OpenAI.apiKey = AIConstants.apiKEY;
       OpenAIChatCompletionModel response = await OpenAI.instance.chat.create(
-        temperature: 0.2,
+        temperature: 0,
         model: "gpt-3.5-turbo",
         messages: [
           OpenAIChatCompletionChoiceMessageModel(
@@ -28,17 +25,23 @@ class OpenAIAPI {
         ],
       );
       if (kDebugMode) {
-              print('LLm: Done.');
-            }
+        print('LLm: Done.');
+      }
       aiResult = jsonDecode(response.choices.first.message.content);
       ProductAnalysis.productAnalysisResult[AIConstants.barcode] =
           ProductAnalysis(
         aiResult[0]["choice"],
-        aiResult[0]['bad_ingredients'].toString().replaceAll('[','').replaceAll(']', ''),
+        aiResult[0]['bad_ingredients']
+            .toString()
+            .replaceAll('[', '')
+            .replaceAll(']', ''),
         aiResult[0]['note'],
-        aiResult[0]['salt_levels'],
-        aiResult[0]['sugar_levels'],
-        aiResult[0]['fat_levels'],
+        aiResult[0]['fat_levels']["levels"],
+        aiResult[0]['fat_levels']["amount"],
+        aiResult[0]['salt_levels']["levels"],
+        aiResult[0]['salt_levels']["amount"],
+        aiResult[0]['sugar_levels']["levels"],
+        aiResult[0]['sugar_levels']["amount"],
       );
 
       if (kDebugMode) {
@@ -54,26 +57,26 @@ class OpenAIAPI {
     return true;
   }
 
-  static Future<void> cleanData() async {
-    String res = '''[{
- "choice": "Bad",
- "bad_ingredients": ["Sugar", "Salt", "Acidity Regulator - 260", "Stabilizers - 1422 415", "Preservative - 211"],
- "sugar_levels":{"amount": "4.8g","levels" : "High"},
- "salt_levels":{"amount": "136mg", "levels" : "Moderate"},
- "fat_levels":{"amount" : "0.02g", "levels" : "Low"},
- "note": "This tomato sauce contains high levels of sugar and moderate levels of salt. It also contains several additives such as acidity regulator, stabilizers, and preservatives, which are not ideal for a healthy diet."
- }]''';
-
-    //await FetchAPI.fetch('8906005500090');
-    var jsonRes = jsonDecode(res);
-    //List<String> sugarLevels;
-    //sugarLevels = jsonRes[0]['bad_ingredients'];
-
-    if (kDebugMode) {
-      print(jsonRes[0]['bad_ingredients'].toString());
-      //print("sugarLevels: $sugarLevels");
-    }
-  }
+//  static Future<void> cleanData() async {
+//    String res = '''[{
+// "choice": "Bad",
+// "bad_ingredients": ["Sugar", "Salt", "Acidity Regulator - 260", "Stabilizers - 1422 415", "Preservative - 211"],
+// "sugar_levels":{"amount": "4.8g","levels" : "High"},
+// "salt_levels":{"amount": "136mg", "levels" : "Moderate"},
+// "fat_levels":{"amount" : "0.02g", "levels" : "Low"},
+// "note": "This tomato sauce contains high levels of sugar and moderate levels of salt. It also contains several additives such as acidity regulator, stabilizers, and preservatives, which are not ideal for a healthy diet."
+// }]''';
+//
+//    //await FetchAPI.fetch('8906005500090');
+//    var jsonRes = jsonDecode(res);
+//    //List<String> sugarLevels;
+//    //sugarLevels = jsonRes[0]['bad_ingredients'];
+//
+//    if (kDebugMode) {
+//      print(jsonRes[0]['bad_ingredients'].toString());
+//      //print("sugarLevels: $sugarLevels");
+//    }
+//  }
 }
 
 //todo: Analyze verbose
