@@ -1,21 +1,26 @@
-class ProductAnalysis { //Details about the product
+class ProductAnalysis {
+  //Details about the product
 
   final String? choice;
   final String? badIngredients;
   final String? note;
-  final Map<String, dynamic>? saltLvl;
-  final Map<String, dynamic>? sugarLvl;
-  final Map<String, dynamic>? fatLvl;
+  final String? fatLevels;
+  final String? totalFat;
+  final String? saltLevels;
+  final String? totalSalt;
+  final String? sugarLevels;
+  final String? totalSugar;
 
   ProductAnalysis(
-      this.choice, this.badIngredients,this.note, this.saltLvl,this.sugarLvl,this.fatLvl
-      );
+      this.choice,
+      this.badIngredients,
+      this.note,
+      this.fatLevels,
+      this.totalFat,
+      this.saltLevels,
+      this.totalSalt,
+      this.sugarLevels,
+      this.totalSugar);
 
-static Map<String?, ProductAnalysis> productAnalysisResult = {};
-
-
-
-
-
-
+  static Map<String?, ProductAnalysis> productAnalysisResult = {};
 }
