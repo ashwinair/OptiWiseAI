@@ -52,11 +52,13 @@ class ProductPageState extends State<ProductPage> {
             final List<String> highLowOrModerate =
                 ProductUtils.highLowOrModerate(barcode);
             return Scaffold(
-              backgroundColor: const Color(0xFFbdb6ff),
+              backgroundColor: const Color(0xFF141414),
               appBar: AppBar(
-                title: const Text(
-                  "Product info",
-                  style: TextStyle(color: Colors.black),
+                title: Text(
+                  "product information",
+                  style: TextStyle(
+                              fontFamily: 'Epilogue',  color: Colors.white,
+                                      fontSize: 13.sp, fontWeight: FontWeight.bold),
                 ),
                 centerTitle: true,
                 backgroundColor: Colors.transparent,
@@ -66,6 +68,7 @@ class ProductPageState extends State<ProductPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Container(
+                    height: 80.h,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -81,7 +84,7 @@ class ProductPageState extends State<ProductPage> {
                         Container(
                           width: 100.w,
                           decoration: const BoxDecoration(
-                            color: Color(0xFFfff250),
+                            //color: Color(0xFFfff250),
                             border: Border(
                               bottom: BorderSide(
                                   width: 1, color: Color(0xFF141414)), //black
@@ -118,17 +121,21 @@ class ProductPageState extends State<ProductPage> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 10.0),
                                       child: AutoSizeText(
-                                        '${Product.productInfo[barcode]?.productName}',
+                                        '${Product.productInfo[barcode]?.productName?.toUpperCase()}',
                                         minFontSize: 12,
                                         maxLines: 2,
-                                        style: TextStyle(fontSize: 13.sp),
+                                        style: TextStyle(
+                                            fontFamily: 'Epilogue',  color:  const Color(0xFF141414),
+                                            fontSize: 15.sp, fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     AutoSizeText(
                                       '${Product.productInfo[barcode]?.size}',
                                       minFontSize: 10,
                                       maxLines: 1,
-                                      style: TextStyle(fontSize: 10.sp),
+                                      style: TextStyle(
+                                            fontFamily: 'Epilogue',  color: Colors.black45,
+                                            fontSize: 10.sp, fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
@@ -144,18 +151,21 @@ class ProductPageState extends State<ProductPage> {
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: highLowOrModerate.map((item) {
                               return Padding(
-                                padding: const EdgeInsets.all(2.0),
+                                padding: const EdgeInsets.all(5.0),
                                 child: Card(
+                                  color: const Color(0xFFfff250),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
-                                    elevation: 2,
-                                    shadowColor: const Color(0xFF141414),
+                                    elevation: 3,
+                                    shadowColor: Colors.black54,
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: AutoSizeText(
                                         item,
-                                        style: TextStyle(fontSize: 12.sp),
+                                        style: TextStyle(
+                                            fontFamily: 'Epilogue',  color:  const Color(0xFF141414),
+                                            fontSize: 12.sp, fontWeight: FontWeight.bold),
                                         maxLines: 1,
                                       ),
                                     )),
@@ -166,16 +176,21 @@ class ProductPageState extends State<ProductPage> {
                         SizedBox(
                           width: 90.w,
                           child: Padding(
-                            padding: const EdgeInsets.all(5.0),
+                            padding:  EdgeInsets.all( 15.sp),
                             child: AutoSizeText(
-                              '${ProductAnalysis.productAnalysisResult[widget.barcode]?.note}',
-                              style: TextStyle(fontSize: 12.sp),
+                              "${ProductAnalysis.productAnalysisResult[widget.barcode]?.note}",
+                              style: TextStyle(
+                                            fontFamily: 'Epilogue',  color:  const Color(0xFF141414),
+                                            fontSize: 12.sp, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
+                         Padding(padding: EdgeInsets.only(bottom: 15.sp)),
                         AutoSizeText(
                           'Bad Ingredients Found ',
-                          style: TextStyle(fontSize: 12.sp),
+                          style: TextStyle(
+                                            fontFamily: 'Epilogue',  color:  const Color(0xFF141414),
+                                            fontSize: 12.sp, fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
@@ -189,15 +204,17 @@ class ProductPageState extends State<ProductPage> {
                                     avatar: const Text(
                                       '❌',
                                       style:
-                                          TextStyle(color: Color(0xFFF32013)),
+                                          TextStyle(color: Color(0xFFF32013),fontWeight: FontWeight.w200, ),
                                     ),
                                     elevation: 2,
                                     label: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: AutoSizeText(
-                                        item,
+                                        item.toLowerCase(),
                                         maxLines: 1,
-                                        style: TextStyle(fontSize: 12.sp),
+                                        style: TextStyle(
+                                            fontFamily: 'Epilogue',  color:  const Color(0xFF141414),
+                                            fontSize: 12.sp, fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     labelPadding: const EdgeInsets.all(1.0)),
@@ -213,7 +230,7 @@ class ProductPageState extends State<ProductPage> {
             );
           } else {
             return Scaffold(
-              backgroundColor: Colors.white,
+             backgroundColor: const Color(0xFF141414),
               body: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: SizedBox(
@@ -230,38 +247,38 @@ class ProductPageState extends State<ProductPage> {
                                 height: 60.w,
                                 child:
                                     Lottie.asset('assets/BarcodeScanner.json')),
-                            const Padding(
-                                padding: EdgeInsets.only(bottom: 5.0)),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                children: [
-                                  TypeWriterText(
-                                    play: true,
-                                    maintainSize: false,
-                                    alignment: Alignment.topCenter,
-                                    text: Text(
-                                      barcode,
-                                      style: TextStyle(fontSize: 12.sp),
-                                    ),
-                                    duration: const Duration(milliseconds: 60),
+                            Column(
+                              children: [
+                                TypeWriterText(
+                                  play: true,
+                                  maintainSize: false,
+                                  alignment: Alignment.topCenter,
+                                  text: Text(
+                                    barcode,
+                                    style: TextStyle(
+                                          fontFamily: 'Epilogue',  color:  const Color(0xFFfff250),
+                                          fontSize: 10.sp, fontWeight: FontWeight.bold),
                                   ),
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: SizedBox(
-                                      child: Center(
-                                        child: TypeWriterText(
-                                          maintainSize: false,
-                                          play: true,
-                                          repeat: true,
-                                          text: Text('Analyzing....'),
-                                          duration: Duration(milliseconds: 60),
-                                        ),
+                                  duration: const Duration(milliseconds: 60),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top:10.0),
+                                  child: SizedBox(
+                                    child: Center(
+                                      child: TypeWriterText(
+                                        maintainSize: false,
+                                        play: true,
+                                        repeat: true,
+                                        text: Text('Analyzing....',
+                                        style: TextStyle(
+                                          fontFamily: 'Epilogue',  color:  const Color(0xFFfff250),
+                                          fontSize: 13.sp, fontWeight: FontWeight.bold),),
+                                        duration: const Duration(milliseconds: 50),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
