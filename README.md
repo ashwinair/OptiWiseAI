@@ -2,6 +2,9 @@
 
 
 The OptiWise.AI project is an Android app that aims to empower users to make informed food choices by leveraging artificial intelligence (AI) and advanced technologies, including Natural Language Processing (NLP) and text recognition. The app allows users to scan barcodes on food products, analyze the ingredients, and provide valuable insights into the nutritional value and health implications of those ingredients. It goes beyond basic nutritional information and helps users distinguish between good and bad choices based on their individual preferences, such as fasting periods or food allergies.
+<p align="center">
+<img src="https://i.imgur.com/azoltVk.jpeg" height="300" />  <img src="https://i.imgur.com/zB9QGgR.jpg" height="300" />
+</p>
 
 ## Table of Contents
 
