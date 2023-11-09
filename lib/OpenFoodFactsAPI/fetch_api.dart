@@ -37,6 +37,7 @@ class FetchAPI {
           jsonResponse['product']['nutrition_data_per']);
       return true;
     } else {
+      productNotFound = true;
       if (kDebugMode) {
         print('Request failed with status: ${response.statusCode}.');
       }
