@@ -7,7 +7,6 @@ import 'package:optiwiseai/utils/product_utils.dart';
 import 'package:sizer/sizer.dart';
 import 'package:typewritertext/typewritertext.dart';
 
-import '../OpenFoodFactsAPI/fetch_api.dart';
 import '../ProductDetails/product.dart';
 import '../ProductDetails/product_analysis.dart';
 
@@ -17,18 +16,23 @@ class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.barcode});
 
   @override
-  State<ProductPage> createState() => ProductPageState();
+  State<ProductPage> createState() => ProductPageState(barcode);
 }
 
 class ProductPageState extends State<ProductPage> {
+  final String barcode;
+
+  ProductPageState(this.barcode);
+
   late Future<bool> _value;
+  late bool _found;
 
   @override
   void initState() {
     super.initState();
-    _value = FindAndAnalysisProduct.checkAndGetData(widget.barcode);
+    _value = FindAndAnalysisProduct.checkAndGetData(barcode);
+    _found = _value as bool;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +40,9 @@ class ProductPageState extends State<ProductPage> {
         future: _value,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData &&
-              Product.productInfo[widget.barcode] != null &&
-              ProductAnalysis.productAnalysisResult[widget.barcode] != null) {
-            String? imgURL = Product.productInfo[widget.barcode]?.imgURL;
+              Product.productInfo[barcode] != null &&
+              ProductAnalysis.productAnalysisResult[barcode] != null) {
+            String? imgURL = Product.productInfo[barcode]?.imgURL;
             var url = '';
             if (imgURL != null) {
               url = imgURL;
@@ -46,9 +50,9 @@ class ProductPageState extends State<ProductPage> {
               url =
                   'https://st.depositphotos.com/1987177/3470/v/450/depositphotos_34700099-stock-illustration-no-photo-available-or-missing.jpg';
             }
-            List<String>? badIngredients = ProductUtils.badIngredients(widget.barcode);
+            List<String>? badIngredients = ProductUtils.badIngredients(barcode);
             final List<String> highLowOrModerate =
-                ProductUtils.highLowOrModerate(widget.barcode);
+                ProductUtils.highLowOrModerate(barcode);
             return Scaffold(
               backgroundColor: const Color(0xFF141414),
               appBar: AppBar(
@@ -68,6 +72,7 @@ class ProductPageState extends State<ProductPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Container(
+                    height: 80.h,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -120,7 +125,7 @@ class ProductPageState extends State<ProductPage> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 10.0),
                                       child: AutoSizeText(
-                                        '${Product.productInfo[widget.barcode]?.productName?.toUpperCase()}',
+                                        '${Product.productInfo[barcode]?.productName?.toUpperCase()}',
                                         minFontSize: 12,
                                         maxLines: 2,
                                         style: TextStyle(
@@ -131,7 +136,7 @@ class ProductPageState extends State<ProductPage> {
                                       ),
                                     ),
                                     AutoSizeText(
-                                      '${Product.productInfo[widget.barcode]?.size}',
+                                      '${Product.productInfo[barcode]?.size}',
                                       minFontSize: 10,
                                       maxLines: 1,
                                       style: TextStyle(
@@ -179,7 +184,7 @@ class ProductPageState extends State<ProductPage> {
                           ),
                         ),
                         SizedBox(
-                          width: 100.w,
+                          width: 90.w,
                           child: Padding(
                             padding: EdgeInsets.all(15.sp),
                             child: AutoSizeText(
@@ -187,8 +192,7 @@ class ProductPageState extends State<ProductPage> {
                               style: TextStyle(
                                   fontFamily: 'Epilogue',
                                   color: const Color(0xFF141414),
-                                  fontSize: 13.sp,
-                                  height: 1.3,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -199,11 +203,11 @@ class ProductPageState extends State<ProductPage> {
                           style: TextStyle(
                               fontFamily: 'Epilogue',
                               color: const Color(0xFF141414),
-                              fontSize: 13.sp,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
+                          padding: const EdgeInsets.only(bottom: 10.0),
                           child: Wrap(
                             alignment: WrapAlignment.start,
                             crossAxisAlignment: WrapCrossAlignment.start,
@@ -242,7 +246,7 @@ class ProductPageState extends State<ProductPage> {
                 ),
               ),
             );
-          } else if (FindAndAnalysisProduct.problemWithAI || FetchAPI.productNotFound) {
+          } else if (_found) {
             return Scaffold(
               backgroundColor: const Color(0xFF141414),
               appBar: AppBar(
@@ -258,45 +262,46 @@ class ProductPageState extends State<ProductPage> {
                 backgroundColor: Colors.transparent,
                 elevation: 0,
               ),
-              body: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  height: 100.h,
-                  width: 100.w,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Column(
-                        children: [
-                           Padding(
-                             padding: const EdgeInsets.all(30),
-                             child: AutoSizeText(
-                        "Oops! It seems like this product hasn't joined our nutritional spotlight just yet. "
-                              "\n\n Stay tuned for updates as we expand our database to serve you even better!",
-                        style:  TextStyle(
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        border: Border.all(
+                          color: Colors.black54,
+                          width: 1,
+                        )),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        AutoSizeText(
+                          "Oops! It seems like this product hasn't joined our nutritional spotlight just yet. "
+                              "Don't worry, though – our quest for healthier choices continues. "
+                              "Keep exploring, keep scanning, and together, "
+                              "we'll unveil the secrets behind more labels. "
+                              "Stay tuned for updates as we expand our database to serve you even better!",
+                          style: TextStyle(
                               fontFamily: 'Epilogue',
                               color: Colors.white,
                               fontSize: 12.sp,
-                              height: 1.3,
                               fontWeight: FontWeight.bold),
-                      ),
-                           ),
-                      const Padding(padding: EdgeInsets.all(30.0)),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                              elevation: 5,
-                                padding: const EdgeInsets.all(5.0),
-                                backgroundColor: const Color(0xFFfff250),
-                              ),
-                          onPressed: () => Navigator.pop(context),
-                          child: Text('ok',style: TextStyle(
-                                  fontFamily: 'Epilogue', color:  const Color(0xFF141414),
-                                    fontSize: 20.sp, fontWeight: FontWeight.bold),)
-                      ),
-
-                        ],
-                      ),
-                    ],
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                                elevation: 5,
+                                  padding: const EdgeInsets.all(5.0),
+                                  backgroundColor: const Color(0xFFfff250),
+                                ),
+                            onPressed: () => Navigator.pop(context),
+                            child: Text('scan barcode',style: TextStyle(
+                                    fontFamily: 'Epilogue', color:  const Color(0xFF141414),
+                                      fontSize: 20.sp, fontWeight: FontWeight.bold),)
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -327,7 +332,7 @@ class ProductPageState extends State<ProductPage> {
                                   maintainSize: false,
                                   alignment: Alignment.topCenter,
                                   text: Text(
-                                    widget.barcode,
+                                    barcode,
                                     style: TextStyle(
                                         fontFamily: 'Epilogue',
                                         color: const Color(0xFFfff250),

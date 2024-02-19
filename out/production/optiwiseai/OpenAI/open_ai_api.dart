@@ -88,7 +88,7 @@ class OpenAIAPI {
 //      //print("sugarLevels: $sugarLevels");
 //    }
 //  }
-}
+ }
 
 //todo: Analyze verbose
 //response.choices.first.message.content will provide only the json response

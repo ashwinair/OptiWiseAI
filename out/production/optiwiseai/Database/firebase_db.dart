@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:optiwiseai/ProductDetails/product.dart';
 import 'package:optiwiseai/ProductDetails/product_analysis.dart';
 
@@ -127,8 +126,6 @@ class FirebaseDB {
     // Write the data to the database in the background.
     await reference.set(data);
 
-    if (kDebugMode) {
-      print('Updated Firebase!');
-    }
+    print('Updated Firebase!');
   }
 }
