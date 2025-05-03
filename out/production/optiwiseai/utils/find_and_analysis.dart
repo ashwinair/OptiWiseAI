@@ -8,7 +8,7 @@ import '../ProductDetails/product_analysis.dart';
 import '../constant/openAI_constants.dart';
 
 class FindAndAnalysisProduct {
-  static bool problemWithAI = false;
+  static late bool problemWithAI;
   static late String barcode;
 
   static Future<bool> checkAndGetData(String barcodeID) async {
@@ -80,6 +80,7 @@ class FindAndAnalysisProduct {
         if (kDebugMode) {
           print('LLm: I analysed the Product and ready with result!');
         }
+        problemWithAI = false;
         FirebaseDB.insertProductDataIntoFirebaseDB(barcode);
         if (kDebugMode) print('\n System: sending data to firebase....');
 
